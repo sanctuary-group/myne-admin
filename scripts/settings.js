@@ -7,10 +7,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const formInputs = accountForm.querySelectorAll('input');
   const passwordToggles = accountForm.querySelectorAll('.password-toggle');
 
+  // ローカルストレージから保存された値を読み込む
+  function loadSavedData() {
+    const savedData = localStorage.getItem('accountSettings');
+    if (savedData) {
+      const data = JSON.parse(savedData);
+      return {
+        name: data.name || '管理者 太郎',
+        email: data.email || 'admin@example.com'
+      };
+    }
+    return {
+      name: '管理者 太郎',
+      email: 'admin@example.com'
+    };
+  }
+
+  // ページ読み込み時に保存された値を反映
+  const savedValues = loadSavedData();
+  document.getElementById('name').value = savedValues.name;
+  document.getElementById('email').value = savedValues.email;
+  document.getElementById('displayName').textContent = savedValues.name;
+  document.getElementById('displayEmail').textContent = savedValues.email;
+
   // 元の値を保存
   let originalValues = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value
+    name: savedValues.name,
+    email: savedValues.email
   };
 
   // 編集モードに切り替え
@@ -151,6 +174,13 @@ document.addEventListener('DOMContentLoaded', () => {
       email,
       passwordChanged: !!newPassword
     });
+
+    // ローカルストレージに保存
+    const dataToSave = {
+      name: name,
+      email: email
+    };
+    localStorage.setItem('accountSettings', JSON.stringify(dataToSave));
 
     // 表示ビューの値を更新
     document.getElementById('displayName').textContent = name;
