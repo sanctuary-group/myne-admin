@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設定 - MyNE 管理画面</title>
+    <link rel="stylesheet" href="styles/settings.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="container">
+        <a href="login.html" class="site-logo">MyNE 管理画面</a>
+        <nav class="site-nav">
+          <a href="users.html">ユーザー管理</a>
+          <a href="settings.html" aria-current="page">設定</a>
+          <a href="login.html">ログアウト</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+      <h1>設定</h1>
+
+      <!-- 成功メッセージ -->
+      <div
+        class="message message--success"
+        id="successMessage"
+        style="display: none"
+      >
+        <svg
+          class="message-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>設定を保存しました</span>
+      </div>
+
+      <!-- アカウント情報 -->
+      <section class="settings-section">
+        <div class="section-header">
+          <h2 class="section-title">アカウント情報</h2>
+          <button type="button" class="btn btn--secondary" id="editBtn">
+            編集
+          </button>
+        </div>
+        <div class="card">
+          <!-- 読み取り専用ビュー -->
+          <div id="accountView" class="account-view">
+            <dl class="info-list">
+              <div class="info-item">
+                <dt>名前</dt>
+                <dd id="displayName">管理者 太郎</dd>
+              </div>
+              <div class="info-item">
+                <dt>メールアドレス</dt>
+                <dd id="displayEmail">admin@example.com</dd>
+              </div>
+              <div class="info-item">
+                <dt>パスワード</dt>
+                <dd>••••••••</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- 編集フォーム -->
+          <form id="accountForm" class="settings-form" style="display: none">
+            <div class="form-group">
+              <label for="name">名前</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value="管理者 太郎"
+                required
+                disabled
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value="admin@example.com"
+                required
+                disabled
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="currentPassword">現在のパスワード</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="currentPassword"
+                  name="currentPassword"
+                  placeholder="パスワード変更時のみ入力"
+                  disabled
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="currentPassword"
+                  tabindex="-1"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">新しいパスワード</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="パスワード変更時のみ入力"
+                  disabled
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="newPassword"
+                  tabindex="-1"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <p class="field-hint">8文字以上、英数字を含む必要があります</p>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">新しいパスワード(確認)</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="パスワード変更時のみ入力"
+                  disabled
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="confirmPassword"
+                  tabindex="-1"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn--secondary" id="cancelBtn">
+                キャンセル
+              </button>
+              <button type="submit" class="btn btn--primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- システム情報 -->
+      <section class="settings-section">
+        <div class="section-header">
+          <h2 class="section-title">システム情報</h2>
+        </div>
+        <div class="card">
+          <dl class="info-list">
+            <div class="info-item">
+              <dt>バージョン</dt>
+              <dd>1.0.0</dd>
+            </div>
+            <div class="info-item">
+              <dt>最終更新日</dt>
+              <dd>2025-10-07</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <script src="scripts/settings.js"></script>
+  </body>
+</html>
