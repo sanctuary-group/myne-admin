@@ -323,20 +323,6 @@ h1 {
   font-size: 14px;
 }
 
-/* バッジ */
-.badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.badge--active {
-  background: #e6f9f0;
-  color: #00a300;
-}
-
 /* アカウントビュー */
 .account-view {
   max-width: 600px;
