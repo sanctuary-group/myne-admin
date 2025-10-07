@@ -16,7 +16,7 @@
         </div>
 
         <!-- ログインフォーム -->
-        <form class="login-form">
+        <form class="login-form" action="users.html" method="get">
           <div class="form-group">
             <label for="email">メールアドレス</label>
             <div class="input-wrapper">
@@ -37,7 +37,7 @@
                 type="email"
                 id="email"
                 name="email"
-                placeholder="admin@example.com"
+                placeholder="メールアドレス入力"
                 required
               />
             </div>
@@ -68,10 +68,17 @@
                 type="password"
                 id="password"
                 name="password"
-                placeholder="••••••••"
+                placeholder="パスワード入力"
                 required
               />
             </div>
+          </div>
+
+          <!-- 仮ログイン情報の表示 -->
+          <div class="demo-credentials">
+            <p class="demo-title">テスト用ログイン情報</p>
+            <p class="demo-item">メールアドレス: <code>admin@example.com</code></p>
+            <p class="demo-item">パスワード: <code>password</code></p>
           </div>
 
           <button type="submit" class="login-button">
