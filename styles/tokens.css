@@ -1,14 +1,14 @@
 /* 共通デザイントークン */
 :root {
   /* カラー */
-  --myne-green: #06c755;
-  --myne-green-strong: #00b900;
-  --myne-green-press: #00a300;
-  --text: #111;
-  --muted: #666;
+  --admin-primary: #525252;
+  --admin-primary-strong: #404040;
+  --admin-primary-press: #262626;
+  --text: #171717;
+  --muted: #737373;
   --card: #fff;
-  --bg-soft: #f8fdf9;
-  --border: #e0e0e0;
+  --bg-soft: #fafafa;
+  --border: #e5e5e5;
 
   /* レイアウト */
   --radius: 16px;
@@ -16,11 +16,11 @@
 
   /* シャドウ */
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 16px rgba(6, 199, 85, 0.15);
-  --shadow-sm: 0 2px 8px rgba(6, 199, 85, 0.2);
+  --shadow-md: 0 4px 16px rgba(82, 82, 82, 0.15);
+  --shadow-sm: 0 2px 8px rgba(82, 82, 82, 0.2);
 
   /* フォーカス */
-  --focus: 0 0 0 3px rgba(6, 199, 85, 0.15);
+  --focus: 0 0 0 3px rgba(82, 82, 82, 0.15);
 
   /* フォント */
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",

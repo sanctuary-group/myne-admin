@@ -16,7 +16,7 @@ body {
 
 /* ヘッダー */
 .site-header {
-  background: linear-gradient(135deg, var(--myne-green) 0%, var(--myne-green-strong) 100%);
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-strong) 100%);
   color: #fff;
   padding: 16px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -134,7 +134,7 @@ h1 {
 }
 
 .search-field input:focus {
-  border-color: var(--myne-green);
+  border-color: var(--admin-primary);
   background: #fff;
   box-shadow: var(--focus);
 }
@@ -154,18 +154,18 @@ h1 {
 
 .btn--primary {
   color: #fff;
-  background: var(--myne-green);
+  background: var(--admin-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn--primary:hover {
-  background: var(--myne-green-strong);
+  background: var(--admin-primary-strong);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn--primary:active {
-  background: var(--myne-green-press);
+  background: var(--admin-primary-press);
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
@@ -194,7 +194,7 @@ h1 {
 }
 
 .pager-size a {
-  color: var(--myne-green);
+  color: var(--admin-primary);
   text-decoration: none;
   padding: 4px 8px;
   border-radius: 4px;
@@ -202,13 +202,13 @@ h1 {
 }
 
 .pager-size a:hover {
-  background: rgba(6, 199, 85, 0.1);
+  background: rgba(82, 82, 82, 0.1);
 }
 
 .pager-size .active {
   color: var(--text);
   font-weight: 700;
-  background: rgba(6, 199, 85, 0.15);
+  background: rgba(82, 82, 82, 0.15);
 }
 
 /* テーブル */
@@ -257,7 +257,7 @@ h1 {
 }
 
 .table tbody tr:hover {
-  background: rgba(6, 199, 85, 0.05);
+  background: rgba(82, 82, 82, 0.05);
 }
 
 .table tbody tr:last-child td {
@@ -274,7 +274,7 @@ h1 {
 }
 
 .table a:focus {
-  outline: 2px solid var(--myne-green);
+  outline: 2px solid var(--admin-primary);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -315,7 +315,7 @@ h1 {
 }
 
 .pagination a {
-  color: var(--myne-green);
+  color: var(--admin-primary);
   text-decoration: none;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
@@ -324,16 +324,16 @@ h1 {
 }
 
 .pagination a:hover:not(.disabled):not(.active) {
-  background: rgba(6, 199, 85, 0.15);
+  background: rgba(82, 82, 82, 0.15);
 }
 
 .pagination a:focus {
-  outline: 2px solid var(--myne-green);
+  outline: 2px solid var(--admin-primary);
   outline-offset: 2px;
 }
 
 .pagination .active {
-  background: var(--myne-green);
+  background: var(--admin-primary);
   color: #fff;
   font-weight: 700;
 }

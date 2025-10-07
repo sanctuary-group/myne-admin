@@ -1,3 +1,5 @@
+@import "./tokens.css";
+
 /* リセットとベーススタイル */
 * {
   margin: 0;
@@ -6,9 +8,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
-    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  background: linear-gradient(135deg, #06c755 0%, #00b900 100%);
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-strong) 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -49,7 +50,7 @@ body {
 }
 
 .service-name {
-  color: #06c755;
+  color: var(--admin-primary);
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -101,7 +102,7 @@ body {
 }
 
 .input-wrapper:focus-within .input-icon {
-  color: #06c755;
+  color: var(--admin-primary);
 }
 
 .form-group input {
@@ -125,9 +126,9 @@ body {
 }
 
 .form-group input:focus {
-  border-color: #06c755;
+  border-color: var(--admin-primary);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(6, 199, 85, 0.15);
+  box-shadow: var(--focus);
 }
 
 .form-group input.error {
@@ -207,7 +208,7 @@ body {
   padding: 2px 8px;
   border-radius: 4px;
   font-family: monospace;
-  color: #06c755;
+  color: var(--admin-primary);
   font-size: 13px;
   border: 1px solid #e0e0e0;
 }
@@ -219,7 +220,7 @@ body {
   font-size: 16px;
   font-weight: 700;
   color: #ffffff;
-  background: #06c755;
+  background: var(--admin-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -229,7 +230,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 2px 8px rgba(6, 199, 85, 0.2);
+  box-shadow: 0 2px 8px rgba(82, 82, 82, 0.2);
 }
 
 .button-arrow {
@@ -239,9 +240,9 @@ body {
 }
 
 .login-button:hover {
-  background: #00b900;
+  background: var(--admin-primary-strong);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(6, 199, 85, 0.25);
+  box-shadow: 0 4px 12px rgba(82, 82, 82, 0.25);
 }
 
 .login-button:hover .button-arrow {
@@ -249,9 +250,9 @@ body {
 }
 
 .login-button:active {
-  background: #00a300;
+  background: var(--admin-primary-press);
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(6, 199, 85, 0.2);
+  box-shadow: 0 2px 6px rgba(82, 82, 82, 0.2);
 }
 
 /* レスポンシブデザイン */

@@ -16,7 +16,7 @@ body {
 
 /* ヘッダー */
 .site-header {
-  background: linear-gradient(135deg, var(--myne-green) 0%, var(--myne-green-strong) 100%);
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-strong) 100%);
   color: #fff;
   padding: 16px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -181,7 +181,7 @@ h1 {
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
 .form-group input[type="password"]:focus {
-  border-color: var(--myne-green);
+  border-color: var(--admin-primary);
   background: #fff;
   box-shadow: var(--focus);
 }
@@ -261,7 +261,7 @@ h1 {
 
 .btn--primary {
   color: #fff;
-  background: var(--myne-green);
+  background: var(--admin-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 12px 32px;
   font-size: 16px;
@@ -269,13 +269,13 @@ h1 {
 }
 
 .btn--primary:hover {
-  background: var(--myne-green-strong);
+  background: var(--admin-primary-strong);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn--primary:active {
-  background: var(--myne-green-press);
+  background: var(--admin-primary-press);
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
