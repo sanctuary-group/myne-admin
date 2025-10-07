@@ -323,8 +323,8 @@ h1 {
   border: 1px solid transparent;
 }
 
-.pagination a:hover {
-  background: rgba(6, 199, 85, 0.1);
+.pagination a:hover:not(.disabled):not(.active) {
+  background: rgba(6, 199, 85, 0.15);
 }
 
 .pagination a:focus {
