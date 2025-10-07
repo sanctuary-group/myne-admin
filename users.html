@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー一覧 - MyNE 管理画面</title>
+    <link rel="stylesheet" href="styles/users.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="container">
+        <a href="login.html" class="site-logo">MyNE 管理</a>
+        <nav class="site-nav">
+          <a href="users.html" aria-current="page">ユーザー一覧</a>
+          <a href="#">設定</a>
+          <a href="login.html">ログアウト</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+      <h1>ユーザー一覧</h1>
+
+      <!-- 検索フォーム -->
+      <form class="search" role="search" action="#">
+        <div class="search-group">
+          <div class="search-field">
+            <label for="search-input">検索</label>
+            <input
+              type="text"
+              id="search-input"
+              name="search"
+              placeholder="名前・メールを入力"
+            />
+          </div>
+          <button type="submit" class="btn btn--primary">検索</button>
+        </div>
+      </form>
+
+      <!-- 件数表示と表示件数切替 -->
+      <div class="meta">
+        <div class="meta-count">全120件・20件表示</div>
+        <div class="pager-size">
+          表示件数:
+          <a href="#" class="active">20</a>
+          /
+          <a href="#">50</a>
+        </div>
+      </div>
+
+      <!-- ユーザーテーブル -->
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="visually-hidden">ユーザー一覧テーブル</caption>
+          <thead>
+            <tr>
+              <th scope="col">ユーザーID</th>
+              <th scope="col">表示名</th>
+              <th scope="col">メールアドレス</th>
+              <th scope="col">ステータス</th>
+              <th scope="col">最終ログイン</th>
+              <th scope="col">登録日</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="8f2d5f4a-9b3c-4e7d-a1f2-6c8e9d0b1234"
+                  >8f2d5f…1234</span
+                >
+              </td>
+              <td><a href="#">山田 太郎</a></td>
+              <td><a href="mailto:yamada@example.com">yamada@example.com</a></td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-07 14:30</td>
+              <td>2024-01-15</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="a3b7c9d1-2e4f-5a6b-8c9d-0e1f2a3b4c5d"
+                  >a3b7c9…4c5d</span
+                >
+              </td>
+              <td><a href="#">佐藤 花子</a></td>
+              <td><a href="mailto:sato@example.com">sato@example.com</a></td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-06 09:15</td>
+              <td>2024-02-20</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="f5e4d3c2-b1a0-9f8e-7d6c-5b4a39281726"
+                  >f5e4d3…1726</span
+                >
+              </td>
+              <td><a href="#">鈴木 一郎</a></td>
+              <td><a href="mailto:suzuki@example.com">suzuki@example.com</a></td>
+              <td><span class="badge badge--suspended">停止</span></td>
+              <td>2025-09-30 16:45</td>
+              <td>2024-03-10</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="1c2d3e4f-5a6b-7c8d-9e0f-1a2b3c4d5e6f"
+                  >1c2d3e…5e6f</span
+                >
+              </td>
+              <td><a href="#">田中 美咲</a></td>
+              <td><a href="mailto:tanaka@example.com">tanaka@example.com</a></td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-07 11:20</td>
+              <td>2024-04-05</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="9e8d7c6b-5a4f-3e2d-1c0b-9a8f7e6d5c4b"
+                  >9e8d7c…5c4b</span
+                >
+              </td>
+              <td><a href="#">高橋 健太</a></td>
+              <td>
+                <a href="mailto:takahashi@example.com">takahashi@example.com</a>
+              </td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-05 13:00</td>
+              <td>2024-05-12</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="6f5e4d3c-2b1a-0f9e-8d7c-6b5a4f3e2d1c"
+                  >6f5e4d…2d1c</span
+                >
+              </td>
+              <td><a href="#">伊藤 さくら</a></td>
+              <td><a href="mailto:ito@example.com">ito@example.com</a></td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-07 08:45</td>
+              <td>2024-06-18</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="d4c3b2a1-0f9e-8d7c-6b5a-4f3e2d1c0b9a"
+                  >d4c3b2…0b9a</span
+                >
+              </td>
+              <td><a href="#">渡辺 拓也</a></td>
+              <td>
+                <a href="mailto:watanabe@example.com">watanabe@example.com</a>
+              </td>
+              <td><span class="badge badge--suspended">停止</span></td>
+              <td>2025-08-22 10:30</td>
+              <td>2024-07-01</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="2a1b0c9d-8e7f-6a5b-4c3d-2e1f0a9b8c7d"
+                  >2a1b0c…8c7d</span
+                >
+              </td>
+              <td><a href="#">中村 優子</a></td>
+              <td>
+                <a href="mailto:nakamura@example.com">nakamura@example.com</a>
+              </td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-06 15:10</td>
+              <td>2024-08-14</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="b9a8f7e6-d5c4-b3a2-f1e0-d9c8b7a6f5e4"
+                  >b9a8f7…f5e4</span
+                >
+              </td>
+              <td><a href="#">小林 大輔</a></td>
+              <td>
+                <a href="mailto:kobayashi@example.com">kobayashi@example.com</a>
+              </td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-07 12:50</td>
+              <td>2024-09-03</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="e7f6a5b4-c3d2-e1f0-a9b8-c7d6e5f4a3b2"
+                  >e7f6a5…a3b2</span
+                >
+              </td>
+              <td><a href="#">加藤 奈々</a></td>
+              <td><a href="mailto:kato@example.com">kato@example.com</a></td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-07 07:20</td>
+              <td>2024-10-01</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"
+                  >3c4d5e…7e8f</span
+                >
+              </td>
+              <td><a href="#">吉田 翔太</a></td>
+              <td>
+                <a href="mailto:yoshida@example.com">yoshida@example.com</a>
+              </td>
+              <td><span class="badge badge--active">有効</span></td>
+              <td>2025-10-04 18:00</td>
+              <td>2024-11-20</td>
+            </tr>
+            <tr>
+              <td>
+                <span
+                  class="user-id"
+                  title="0f1e2d3c-4b5a-6f7e-8d9c-0b1a2f3e4d5c"
+                  >0f1e2d…4d5c</span
+                >
+              </td>
+              <td><a href="#">山口 真理</a></td>
+              <td>
+                <a href="mailto:yamaguchi@example.com">yamaguchi@example.com</a>
+              </td>
+              <td><span class="badge badge--suspended">停止</span></td>
+              <td>2025-09-15 14:00</td>
+              <td>2024-12-05</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 空状態サンプル（コメントアウト）
+        <div class="empty-state">
+          <p>ユーザーがいません。</p>
+        </div>
+        -->
+      </div>
+
+      <!-- ページネーション -->
+      <nav class="pagination" aria-label="ページネーション">
+        <a href="#" class="disabled">前へ</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">次へ</a>
+      </nav>
+    </main>
+  </body>
+</html>
