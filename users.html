@@ -12,7 +12,7 @@
       <div class="container">
         <a href="login.html" class="site-logo">MyNE 管理</a>
         <nav class="site-nav">
-          <a href="users.html" aria-current="page">ユーザー一覧</a>
+          <a href="users.html" aria-current="page">ユーザー管理</a>
           <a href="#">設定</a>
           <a href="login.html">ログアウト</a>
         </nav>
@@ -21,7 +21,7 @@
 
     <!-- メインコンテンツ -->
     <main class="container">
-      <h1>ユーザー一覧</h1>
+      <h1>ユーザー管理</h1>
 
       <!-- 検索フォーム -->
       <form class="search" role="search" action="#">
@@ -32,7 +32,7 @@
               type="text"
               id="search-input"
               name="search"
-              placeholder="名前・メールを入力"
+              placeholder="名前・メールアドレスを入力"
             />
           </div>
           <button type="submit" class="btn btn--primary">検索</button>
@@ -53,7 +53,9 @@
       <!-- ユーザーテーブル -->
       <div class="table-wrap">
         <table class="table">
-          <caption class="visually-hidden">ユーザー一覧テーブル</caption>
+          <caption class="visually-hidden">
+            ユーザー一覧テーブル
+          </caption>
           <thead>
             <tr>
               <th scope="col">ユーザーID</th>
@@ -61,7 +63,7 @@
               <th scope="col">メールアドレス</th>
               <th scope="col">ステータス</th>
               <th scope="col">最終ログイン</th>
-              <th scope="col">登録日</th>
+              <th scope="col">利用開始日</th>
             </tr>
           </thead>
           <tbody>
@@ -74,7 +76,9 @@
                 >
               </td>
               <td><a href="#">山田 太郎</a></td>
-              <td><a href="mailto:yamada@example.com">yamada@example.com</a></td>
+              <td>
+                <a href="mailto:yamada@example.com">yamada@example.com</a>
+              </td>
               <td><span class="badge badge--active">有効</span></td>
               <td>2025-10-07 14:30</td>
               <td>2024-01-15</td>
@@ -102,7 +106,9 @@
                 >
               </td>
               <td><a href="#">鈴木 一郎</a></td>
-              <td><a href="mailto:suzuki@example.com">suzuki@example.com</a></td>
+              <td>
+                <a href="mailto:suzuki@example.com">suzuki@example.com</a>
+              </td>
               <td><span class="badge badge--suspended">停止</span></td>
               <td>2025-09-30 16:45</td>
               <td>2024-03-10</td>
@@ -116,7 +122,9 @@
                 >
               </td>
               <td><a href="#">田中 美咲</a></td>
-              <td><a href="mailto:tanaka@example.com">tanaka@example.com</a></td>
+              <td>
+                <a href="mailto:tanaka@example.com">tanaka@example.com</a>
+              </td>
               <td><span class="badge badge--active">有効</span></td>
               <td>2025-10-07 11:20</td>
               <td>2024-04-05</td>
