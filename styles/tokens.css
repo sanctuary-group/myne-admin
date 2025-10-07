@@ -1,0 +1,28 @@
+/* 共通デザイントークン */
+:root {
+  /* カラー */
+  --myne-green: #06c755;
+  --myne-green-strong: #00b900;
+  --myne-green-press: #00a300;
+  --text: #111;
+  --muted: #666;
+  --card: #fff;
+  --bg-soft: #f8fdf9;
+  --border: #e0e0e0;
+
+  /* レイアウト */
+  --radius: 16px;
+  --radius-sm: 8px;
+
+  /* シャドウ */
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(6, 199, 85, 0.15);
+  --shadow-sm: 0 2px 8px rgba(6, 199, 85, 0.2);
+
+  /* フォーカス */
+  --focus: 0 0 0 3px rgba(6, 199, 85, 0.15);
+
+  /* フォント */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
