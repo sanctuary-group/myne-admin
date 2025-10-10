@@ -444,6 +444,12 @@ h1 {
   margin-bottom: 16px;
 }
 
+/* 決済履歴一覧 */
+.payment-history-list {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
 .accounts-table {
   width: 100%;
   border-collapse: collapse;
@@ -452,7 +458,7 @@ h1 {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  min-width: 1200px;
+  min-width: 1400px;
 }
 
 .accounts-table thead {
@@ -480,23 +486,6 @@ h1 {
   border-bottom: none;
 }
 
-/* アカウント種別バッジ */
-.account-type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  background: var(--bg-soft);
-  color: var(--text);
-}
-
-.account-type-icon {
-  font-size: 16px;
-}
-
 /* アカウントステータスバッジ */
 .account-status-badge {
   display: inline-block;
@@ -514,6 +503,48 @@ h1 {
 .account-status-badge.inactive {
   background: #f0f0f0;
   color: #666;
+}
+
+/* 支払ステータスバッジ */
+.payment-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.payment-status-badge.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.payment-status-badge.failed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.payment-status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.payment-status-badge.suspended {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* 友だち数表示 */
+.friends-count {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.friends-count::after {
+  content: ' 人';
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 2px;
 }
 
 /* 操作列のセル */
@@ -560,6 +591,44 @@ h1 {
   color: #fff;
 }
 
+/* 停止ボタン */
+.btn-suspend {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+  background: transparent;
+  border: 1px solid #dc2626;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-suspend:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* 再開ボタン */
+.btn-resume {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--admin-primary);
+  background: transparent;
+  border: 1px solid var(--admin-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-resume:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
 /* 空状態 */
 .empty-state {
   text-align: center;
@@ -582,6 +651,33 @@ h1 {
   font-size: 13px;
   color: var(--text);
   flex: 1;
+}
+
+/* 決済ID表示 */
+.payment-id-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-id {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+/* 金額表示 */
+.payment-amount {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.payment-amount::after {
+  content: ' 円';
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 2px;
 }
 
 /* パスワード表示セル */

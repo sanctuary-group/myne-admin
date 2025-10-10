@@ -61,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelAddLineAccountBtn = document.getElementById('cancelAddLineAccountBtn');
   const editLineAccountStatusModal = document.getElementById('editLineAccountStatusModal');
   const editLineAccountStatusForm = document.getElementById('editLineAccountStatusForm');
-  const editLineAccountName = document.getElementById('editLineAccountName');
-  const editLineAccountStatus = document.getElementById('editLineAccountStatus');
   const cancelEditLineAccountStatusBtn = document.getElementById('cancelEditLineAccountStatusBtn');
   const unlinkLineAccountModal = document.getElementById('unlinkLineAccountModal');
   const unlinkLineAccountName = document.getElementById('unlinkLineAccountName');
@@ -71,11 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const lineAccountsList = document.getElementById('lineAccountsList');
   const lineAccountsEmptyState = document.getElementById('lineAccountsEmptyState');
 
-  // LINEアカウントデータ（モックデータ）
+  // 支払管理の要素を取得
+  const paymentHistoryList = document.getElementById('paymentHistoryList');
+  const paymentHistoryEmptyState = document.getElementById('paymentHistoryEmptyState');
+  const suspendPaymentModal = document.getElementById('suspendPaymentModal');
+  const suspendPaymentId = document.getElementById('suspendPaymentId');
+  const cancelSuspendPaymentBtn = document.getElementById('cancelSuspendPaymentBtn');
+  const confirmSuspendPaymentBtn = document.getElementById('confirmSuspendPaymentBtn');
+  const resumePaymentModal = document.getElementById('resumePaymentModal');
+  const resumePaymentId = document.getElementById('resumePaymentId');
+  const cancelResumePaymentBtn = document.getElementById('cancelResumePaymentBtn');
+  const confirmResumePaymentBtn = document.getElementById('confirmResumePaymentBtn');
+
+  // LINEアカウントデータ（モックデータ）- RPA情報とLINE情報を統合
   let lineAccounts = [
     {
       id: 1,
       rpaId: 'U1234567890abcdef1234567890abcdef',
+      lineName: 'MyNE公式アカウント',
+      friendsCount: 1234,
       tel: '090-1234-5678',
       email: 'user1@example.com',
       password: 'SecurePass123!',
@@ -85,16 +97,76 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: 2,
       rpaId: 'Uabcdef1234567890abcdef1234567890',
+      lineName: 'サポート用アカウント',
+      friendsCount: 567,
       tel: '080-9876-5432',
       email: 'user2@example.com',
       password: 'MyPassword456@',
       linkedAt: '2024-02-20 14:00',
       status: 'active'
+    },
+    {
+      id: 3,
+      rpaId: 'U9876543210fedcba9876543210fedcba',
+      lineName: '個人アカウント',
+      friendsCount: 89,
+      tel: '070-5555-6666',
+      email: 'personal@example.com',
+      password: 'Personal789#',
+      linkedAt: '2024-03-10 16:20',
+      status: 'inactive'
     }
   ];
 
   let lineAccountIdToUnlink = null;
   let lineAccountIdToEdit = null;
+
+  // 決済履歴データ（モックデータ）
+  let paymentHistory = [
+    {
+      id: 'PAY-2024-001',
+      date: '2024-10-01 15:30',
+      planName: 'スタンダードプラン',
+      amount: 9800,
+      paymentMethod: 'クレジットカード (****1234)',
+      status: 'success'
+    },
+    {
+      id: 'PAY-2024-002',
+      date: '2024-09-01 15:30',
+      planName: 'スタンダードプラン',
+      amount: 9800,
+      paymentMethod: 'クレジットカード (****1234)',
+      status: 'success'
+    },
+    {
+      id: 'PAY-2024-003',
+      date: '2024-08-01 15:30',
+      planName: 'スタンダードプラン',
+      amount: 9800,
+      paymentMethod: 'クレジットカード (****1234)',
+      status: 'suspended'
+    },
+    {
+      id: 'PAY-2024-004',
+      date: '2024-07-01 15:30',
+      planName: 'ベーシックプラン',
+      amount: 4980,
+      paymentMethod: '銀行振込',
+      status: 'failed'
+    },
+    {
+      id: 'PAY-2024-005',
+      date: '2024-06-01 15:30',
+      planName: 'ベーシックプラン',
+      amount: 4980,
+      paymentMethod: 'クレジットカード (****5678)',
+      status: 'pending'
+    }
+  ];
+
+  let paymentIdToSuspend = null;
+  let paymentIdToResume = null;
 
   // RPA IDを自動生成（Uで始まる33文字の16進数）
   function generateRpaId() {
@@ -104,6 +176,145 @@ document.addEventListener('DOMContentLoaded', () => {
       rpaId += hexChars[Math.floor(Math.random() * 16)];
     }
     return rpaId;
+  }
+
+  // 友だち数をカンマ区切りでフォーマット
+  function formatFriendsCount(count) {
+    return count.toLocaleString('ja-JP');
+  }
+
+  // 金額をカンマ区切りでフォーマット
+  function formatAmount(amount) {
+    return amount.toLocaleString('ja-JP');
+  }
+
+  // 決済履歴の表示
+  function renderPaymentHistory() {
+    if (paymentHistory.length === 0) {
+      paymentHistoryList.style.display = 'none';
+      paymentHistoryEmptyState.style.display = 'block';
+      return;
+    }
+
+    paymentHistoryList.style.display = 'block';
+    paymentHistoryEmptyState.style.display = 'none';
+
+    const table = document.createElement('table');
+    table.className = 'accounts-table';
+
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr>
+        <th>決済ID</th>
+        <th>決済日時</th>
+        <th>プラン名</th>
+        <th>金額</th>
+        <th>支払方法</th>
+        <th>ステータス</th>
+        <th>操作</th>
+      </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    paymentHistory.forEach(payment => {
+      const row = document.createElement('tr');
+
+      // ステータスのクラスとラベル
+      let statusClass = '';
+      let statusLabel = '';
+      switch (payment.status) {
+        case 'success':
+          statusClass = 'success';
+          statusLabel = '成功';
+          break;
+        case 'failed':
+          statusClass = 'failed';
+          statusLabel = '失敗';
+          break;
+        case 'pending':
+          statusClass = 'pending';
+          statusLabel = '保留中';
+          break;
+        case 'suspended':
+          statusClass = 'suspended';
+          statusLabel = '停止中';
+          break;
+      }
+
+      // 操作ボタン
+      let actionButton = '';
+      if (payment.status === 'suspended') {
+        actionButton = `<button type="button" class="btn-resume" data-payment-id="${payment.id}">再開</button>`;
+      } else if (payment.status === 'success' || payment.status === 'pending') {
+        actionButton = `<button type="button" class="btn-suspend" data-payment-id="${payment.id}">停止</button>`;
+      }
+
+      row.innerHTML = `
+        <td>
+          <div class="payment-id-cell">
+            <span class="payment-id">${payment.id}</span>
+            <button type="button" class="btn-copy" data-payment-id="${payment.id}">コピー</button>
+          </div>
+        </td>
+        <td>${payment.date}</td>
+        <td>${payment.planName}</td>
+        <td><span class="payment-amount">${formatAmount(payment.amount)}</span></td>
+        <td>${payment.paymentMethod}</td>
+        <td><span class="payment-status-badge ${statusClass}">${statusLabel}</span></td>
+        <td>${actionButton}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+
+    paymentHistoryList.innerHTML = '';
+    paymentHistoryList.appendChild(table);
+
+    // 決済IDコピーボタンのイベントリスナーを追加
+    const copyButtons = paymentHistoryList.querySelectorAll('.btn-copy');
+    copyButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const paymentId = e.target.getAttribute('data-payment-id');
+        try {
+          await navigator.clipboard.writeText(paymentId);
+          const originalText = e.target.textContent;
+          e.target.textContent = 'コピー済み';
+          e.target.classList.add('copied');
+
+          setTimeout(() => {
+            e.target.textContent = originalText;
+            e.target.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('コピーに失敗しました:', err);
+          alert('コピーに失敗しました');
+        }
+      });
+    });
+
+    // 停止ボタンのイベントリスナーを追加
+    const suspendButtons = paymentHistoryList.querySelectorAll('.btn-suspend');
+    suspendButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const paymentId = e.target.getAttribute('data-payment-id');
+        paymentIdToSuspend = paymentId;
+        suspendPaymentId.textContent = paymentId;
+        suspendPaymentModal.style.display = 'flex';
+      });
+    });
+
+    // 再開ボタンのイベントリスナーを追加
+    const resumeButtons = paymentHistoryList.querySelectorAll('.btn-resume');
+    resumeButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const paymentId = e.target.getAttribute('data-payment-id');
+        paymentIdToResume = paymentId;
+        resumePaymentId.textContent = paymentId;
+        resumePaymentModal.style.display = 'flex';
+      });
+    });
   }
 
   // LINEアカウント一覧の表示
@@ -124,10 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
     thead.innerHTML = `
       <tr>
         <th>RPA ID</th>
+        <th>LINE名</th>
+        <th>友だち数</th>
         <th>電話番号</th>
         <th>メールアドレス</th>
         <th>パスワード</th>
-        <th>連携日時</th>
+        <th>登録日時</th>
         <th>ステータス</th>
         <th>操作</th>
       </tr>
@@ -148,6 +361,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="btn-copy" data-rpa-id="${account.rpaId}">コピー</button>
           </div>
         </td>
+        <td>${account.lineName}</td>
+        <td><span class="friends-count">${formatFriendsCount(account.friendsCount)}</span></td>
         <td>${account.tel}</td>
         <td>${account.email}</td>
         <td>
@@ -254,8 +469,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const account = lineAccounts.find(a => a.id === accountId);
         if (account) {
           lineAccountIdToEdit = accountId;
-          editLineAccountName.textContent = `${account.tel}`;
-          editLineAccountStatus.value = account.status;
+          document.getElementById('editRpaId').value = account.rpaId;
+          document.getElementById('editLineName').value = account.lineName;
+          document.getElementById('editLineTel').value = account.tel;
+          document.getElementById('editLineEmail').value = account.email;
+          document.getElementById('editLinePassword').value = account.password;
+          document.getElementById('editLineAccountStatus').value = account.status;
           editLineAccountStatusModal.style.display = 'flex';
         }
       });
@@ -278,6 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 初期表示
   renderLineAccountsList();
+  renderPaymentHistory();
 
   // LINEアカウント追加ボタンクリック
   addLineAccountBtn.addEventListener('click', () => {
@@ -316,13 +536,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formData = new FormData(addLineAccountForm);
     const rpaId = formData.get('rpaId').trim();
+    const lineName = formData.get('lineName').trim();
     const tel = formData.get('lineTel').trim();
     const email = formData.get('lineEmail').trim();
     const password = formData.get('linePassword').trim();
     const accountStatus = formData.get('lineAccountStatus');
 
     // バリデーション - 必須項目チェック
-    if (!rpaId || !tel || !email || !password) {
+    if (!rpaId || !lineName || !tel || !email || !password) {
       alert('すべての必須項目を入力してください');
       return;
     }
@@ -372,6 +593,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const newAccount = {
       id: Math.max(...lineAccounts.map(a => a.id), 0) + 1,
       rpaId: rpaId,
+      lineName: lineName,
+      friendsCount: 0,
       tel: tel,
       email: email,
       password: password,
@@ -393,17 +616,59 @@ document.addEventListener('DOMContentLoaded', () => {
     successMessage.querySelector('span').textContent = 'LINEアカウントを追加しました';
   });
 
-  // LINEアカウントステータス編集フォーム送信
+  // LINEアカウント編集フォーム送信
   editLineAccountStatusForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (lineAccountIdToEdit !== null) {
-      const newStatus = editLineAccountStatus.value;
+      const formData = new FormData(editLineAccountStatusForm);
+      const lineName = formData.get('editLineName').trim();
+      const tel = formData.get('editLineTel').trim();
+      const email = formData.get('editLineEmail').trim();
+      const password = formData.get('editLinePassword').trim();
+      const accountStatus = formData.get('editLineAccountStatus');
 
-      // ステータスを更新
+      // バリデーション - 必須項目チェック
+      if (!lineName || !tel || !email || !password) {
+        alert('すべての必須項目を入力してください');
+        return;
+      }
+
+      // メールアドレス形式チェック
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert('正しいメールアドレスを入力してください');
+        return;
+      }
+
+      // パスワード強度チェック（8文字以上）
+      if (password.length < 8) {
+        alert('パスワードは8文字以上にしてください');
+        return;
+      }
+
+      // 重複チェック（電話番号）- 自分以外
+      const duplicateTel = lineAccounts.find(a => a.tel === tel && a.id !== lineAccountIdToEdit);
+      if (duplicateTel) {
+        alert('同じ電話番号が既に登録されています');
+        return;
+      }
+
+      // 重複チェック（メールアドレス）- 自分以外
+      const duplicateEmail = lineAccounts.find(a => a.email === email && a.id !== lineAccountIdToEdit);
+      if (duplicateEmail) {
+        alert('同じメールアドレスが既に登録されています');
+        return;
+      }
+
+      // アカウント情報を更新
       const account = lineAccounts.find(a => a.id === lineAccountIdToEdit);
       if (account) {
-        account.status = newStatus;
+        account.lineName = lineName;
+        account.tel = tel;
+        account.email = email;
+        account.password = password;
+        account.status = accountStatus;
 
         // アカウント一覧を再表示
         renderLineAccountsList();
@@ -414,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 成功メッセージを表示
         showSuccess();
-        successMessage.querySelector('span').textContent = 'LINEアカウントステータスを更新しました';
+        successMessage.querySelector('span').textContent = 'LINEアカウントを更新しました';
       }
     }
   });
@@ -448,6 +713,74 @@ document.addEventListener('DOMContentLoaded', () => {
       showSuccess();
       successMessage.querySelector('span').textContent = 'LINEアカウントを解除しました';
     }
+  });
+
+  // 支払停止キャンセル
+  cancelSuspendPaymentBtn.addEventListener('click', () => {
+    suspendPaymentModal.style.display = 'none';
+    paymentIdToSuspend = null;
+  });
+
+  // 支払停止確定
+  confirmSuspendPaymentBtn.addEventListener('click', () => {
+    if (paymentIdToSuspend !== null) {
+      // 支払ステータスを停止中に変更
+      const payment = paymentHistory.find(p => p.id === paymentIdToSuspend);
+      if (payment) {
+        payment.status = 'suspended';
+
+        // 決済履歴を再表示
+        renderPaymentHistory();
+
+        // モーダルを閉じる
+        suspendPaymentModal.style.display = 'none';
+        paymentIdToSuspend = null;
+
+        // 成功メッセージを表示
+        showSuccess();
+        successMessage.querySelector('span').textContent = '支払を停止しました';
+      }
+    }
+  });
+
+  // 支払停止モーダルのオーバーレイクリック
+  suspendPaymentModal.querySelector('.modal-overlay').addEventListener('click', () => {
+    suspendPaymentModal.style.display = 'none';
+    paymentIdToSuspend = null;
+  });
+
+  // 支払再開キャンセル
+  cancelResumePaymentBtn.addEventListener('click', () => {
+    resumePaymentModal.style.display = 'none';
+    paymentIdToResume = null;
+  });
+
+  // 支払再開確定
+  confirmResumePaymentBtn.addEventListener('click', () => {
+    if (paymentIdToResume !== null) {
+      // 支払ステータスを成功に変更
+      const payment = paymentHistory.find(p => p.id === paymentIdToResume);
+      if (payment) {
+        payment.status = 'success';
+
+        // 決済履歴を再表示
+        renderPaymentHistory();
+
+        // モーダルを閉じる
+        resumePaymentModal.style.display = 'none';
+        paymentIdToResume = null;
+
+        // 成功メッセージを表示
+        showSuccess();
+        successMessage.querySelector('span').textContent = '支払を再開しました';
+      }
+    }
+  });
+
+  // 支払再開モーダルのオーバーレイクリック
+  resumePaymentModal.querySelector('.modal-overlay').addEventListener('click', () => {
+    resumePaymentModal.style.display = 'none';
+    paymentIdToResume = null;
   });
 
   // パスワード表示/非表示トグル
