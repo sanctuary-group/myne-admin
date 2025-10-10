@@ -75,14 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let lineAccounts = [
     {
       id: 1,
-      lineUuid: 'U1234567890abcdef1234567890abcdef',
+      rpaId: 'U1234567890abcdef1234567890abcdef',
       displayName: '山田 太郎',
       linkedAt: '2024-01-15 10:30',
       status: 'active'
     },
     {
       id: 2,
-      lineUuid: 'Uabcdef1234567890abcdef1234567890',
+      rpaId: 'Uabcdef1234567890abcdef1234567890',
       displayName: '山田太郎（サブ）',
       linkedAt: '2024-02-20 14:00',
       status: 'active'
@@ -92,10 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let lineAccountIdToUnlink = null;
   let lineAccountIdToEdit = null;
 
-  // LINE Uuidを短縮表示
-  function shortenLineUuid(uuid) {
-    if (uuid.length <= 12) return uuid;
-    return uuid.substring(0, 6) + '...' + uuid.substring(uuid.length - 4);
+  // RPA IDを短縮表示
+  function shortenRpaId(rpaId) {
+    if (rpaId.length <= 12) return rpaId;
+    return rpaId.substring(0, 6) + '...' + rpaId.substring(rpaId.length - 4);
   }
 
   // LINEアカウント一覧の表示
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const thead = document.createElement('thead');
     thead.innerHTML = `
       <tr>
-        <th>LINE Uuid</th>
+        <th>RPA ID</th>
         <th>表示名</th>
         <th>連携日時</th>
         <th>ステータス</th>
@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const statusClass = account.status === 'active' ? 'active' : 'inactive';
       const statusLabel = account.status === 'active' ? '有効' : '無効';
-      const shortUuid = shortenLineUuid(account.lineUuid);
+      const shortRpaId = shortenRpaId(account.rpaId);
 
       row.innerHTML = `
         <td>
-          <span class="line-uuid" title="${account.lineUuid}">${shortUuid}</span>
+          <span class="rpa-id" title="${account.rpaId}">${shortRpaId}</span>
         </td>
         <td>${account.displayName}</td>
         <td>${account.linkedAt}</td>
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const account = lineAccounts.find(a => a.id === accountId);
         if (account) {
           lineAccountIdToEdit = accountId;
-          editLineAccountName.textContent = `${account.displayName} (${shortenLineUuid(account.lineUuid)})`;
+          editLineAccountName.textContent = `${account.displayName} (${shortenRpaId(account.rpaId)})`;
           editLineAccountStatus.value = account.status;
           editLineAccountStatusModal.style.display = 'flex';
         }
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const account = lineAccounts.find(a => a.id === accountId);
         if (account) {
           lineAccountIdToUnlink = accountId;
-          unlinkLineAccountName.textContent = `${account.displayName} (${shortenLineUuid(account.lineUuid)})`;
+          unlinkLineAccountName.textContent = `${account.displayName} (${shortenRpaId(account.rpaId)})`;
           unlinkLineAccountModal.style.display = 'flex';
         }
       });
@@ -219,34 +219,34 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
 
     const formData = new FormData(addLineAccountForm);
-    const lineUuid = formData.get('lineUuid').trim();
+    const rpaId = formData.get('rpaId').trim();
     const displayName = formData.get('lineDisplayName').trim();
     const accountStatus = formData.get('lineAccountStatus');
 
     // バリデーション - 必須項目チェック
-    if (!lineUuid || !displayName) {
-      alert('LINE Uuidと表示名は必須です');
+    if (!rpaId || !displayName) {
+      alert('RPA IDと表示名は必須です');
       return;
     }
 
-    // LINE Uuid形式チェック（Uで始まる33文字の英数字）
-    const lineUuidPattern = /^U[0-9a-f]{32}$/;
-    if (!lineUuidPattern.test(lineUuid)) {
-      alert('LINE Uuidの形式が正しくありません。\nUで始まる33文字の英数字である必要があります。');
+    // RPA ID形式チェック（Uで始まる33文字の英数字）
+    const rpaIdPattern = /^U[0-9a-f]{32}$/;
+    if (!rpaIdPattern.test(rpaId)) {
+      alert('RPA IDの形式が正しくありません。\nUで始まる33文字の英数字である必要があります。');
       return;
     }
 
     // 重複チェック
-    const duplicate = lineAccounts.find(a => a.lineUuid === lineUuid);
+    const duplicate = lineAccounts.find(a => a.rpaId === rpaId);
     if (duplicate) {
-      alert('同じLINE Uuidが既に登録されています');
+      alert('同じRPA IDが既に登録されています');
       return;
     }
 
     // 新しいLINEアカウントを追加
     const newAccount = {
       id: Math.max(...lineAccounts.map(a => a.id), 0) + 1,
-      lineUuid: lineUuid,
+      rpaId: rpaId,
       displayName: displayName,
       linkedAt: new Date().toISOString().slice(0, 16).replace('T', ' '),
       status: accountStatus

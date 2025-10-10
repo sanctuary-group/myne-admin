@@ -222,12 +222,12 @@
 
             <div class="form-divider"></div>
 
-            <h2 class="section-subtitle">LINEアカウント</h2>
-            <p class="field-hint" style="margin-bottom: 16px;">このユーザーに紐づけられたLINEアカウントを管理します</p>
+            <h2 class="section-subtitle">LINEアカウント(RPA)</h2>
+            <p class="field-hint" style="margin-bottom: 16px;">このユーザーに紐づけられたLINEアカウントおよびRPAツール(リモートデスクトップ)を管理します</p>
 
             <div class="section-header">
               <button type="button" class="btn btn--secondary btn-sm" id="addLineAccountBtn">
-                + LINEアカウント追加
+                + LINEアカウント(RPA)追加
               </button>
             </div>
 
@@ -274,14 +274,14 @@
     <div class="modal" id="addLineAccountModal" style="display: none;">
       <div class="modal-overlay"></div>
       <div class="modal-content">
-        <h3 class="modal-title">LINEアカウント追加</h3>
+        <h3 class="modal-title">LINEアカウント追加(RPA)</h3>
         <form id="addLineAccountForm">
           <div class="form-group">
-            <label for="lineUuid">LINE Uuid <span class="required">*</span></label>
+            <label for="rpaId">RPA ID <span class="required">*</span></label>
             <input
               type="text"
-              id="lineUuid"
-              name="lineUuid"
+              id="rpaId"
+              name="rpaId"
               placeholder="例: U1234567890abcdef1234567890abcdef"
               required
             />

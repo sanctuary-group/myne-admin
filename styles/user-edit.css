@@ -554,8 +554,8 @@ h1 {
   border: 1px dashed var(--border);
 }
 
-/* LINE Uuid表示 */
-.line-uuid {
+/* RPA ID表示 */
+.rpa-id {
   font-family: monospace;
   font-size: 13px;
   color: var(--muted);
