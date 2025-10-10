@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td><span class="badge ${statusBadgeClass}">${user.status}</span></td>
         <td>${user.lastLogin}</td>
         <td>${user.startDate}</td>
+        <td><a href="user-edit.html?id=${user.id}" class="btn-edit">編集</a></td>
       `;
       tableBody.appendChild(row);
     });

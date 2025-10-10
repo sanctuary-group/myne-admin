@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー情報編集 - MyNE 管理画面</title>
+    <link rel="stylesheet" href="styles/user-edit.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="container">
+        <a href="login.html" class="site-logo">MyNE 管理画面</a>
+        <nav class="site-nav">
+          <a href="users.html">ユーザー管理</a>
+          <a href="settings.html">設定</a>
+          <a href="login.html">ログアウト</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+      <h1>ユーザー情報編集</h1>
+
+      <!-- 成功メッセージ -->
+      <div
+        class="message message--success"
+        id="successMessage"
+        style="display: none"
+      >
+        <svg
+          class="message-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>ユーザー情報を更新しました</span>
+      </div>
+
+      <!-- エラーメッセージ -->
+      <div
+        class="message message--error"
+        id="errorMessage"
+        style="display: none"
+      >
+        <svg
+          class="message-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="errorMessageText"></span>
+      </div>
+
+      <!-- ユーザー編集フォーム -->
+      <section class="form-section">
+        <div class="card">
+          <form id="userEditForm" class="user-form">
+            <div class="form-group">
+              <label for="userId">ユーザーID</label>
+              <input
+                type="text"
+                id="userId"
+                name="userId"
+                readonly
+                disabled
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="displayName">表示名 <span class="required">*</span></label>
+              <input
+                type="text"
+                id="displayName"
+                name="displayName"
+                placeholder="山田 太郎"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス <span class="required">*</span></label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="yamada@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="status">ステータス <span class="required">*</span></label>
+              <select id="status" name="status" required>
+                <option value="有効">有効</option>
+                <option value="停止">停止</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="startDate">利用開始日 <span class="required">*</span></label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="lastLogin">最終ログイン</label>
+              <input
+                type="text"
+                id="lastLogin"
+                name="lastLogin"
+                readonly
+                disabled
+              />
+            </div>
+
+            <div class="form-divider"></div>
+
+            <h2 class="section-subtitle">パスワード変更 (任意)</h2>
+            <p class="field-hint" style="margin-bottom: 16px;">パスワードを変更する場合のみ入力してください</p>
+
+            <div class="form-group">
+              <label for="newPassword">新しいパスワード</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="8文字以上、英数字を含む"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="newPassword"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <p class="field-hint">8文字以上、英数字を含む必要があります</p>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">新しいパスワード(確認)</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="パスワードを再入力"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="confirmPassword"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <h2 class="section-subtitle">LINEアカウント管理</h2>
+            <p class="field-hint" style="margin-bottom: 16px;">このユーザーに紐づけられたLINEアカウント（RPA ID、LINE名、友だち数、連絡先情報）を管理します</p>
+
+            <div class="section-header">
+              <button type="button" class="btn btn--secondary btn-sm" id="addLineAccountBtn">
+                + LINEアカウント追加
+              </button>
+            </div>
+
+            <!-- LINEアカウント一覧 -->
+            <div class="line-accounts-list" id="lineAccountsList">
+              <!-- JavaScriptで動的に生成 -->
+            </div>
+
+            <!-- 空状態 -->
+            <div class="empty-state" id="lineAccountsEmptyState" style="display: none;">
+              <p>LINEアカウントが登録されていません</p>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <h2 class="section-subtitle">支払管理</h2>
+            <p class="field-hint" style="margin-bottom: 16px;">このユーザーの決済履歴と支払状態を管理します</p>
+
+            <!-- 決済履歴一覧 -->
+            <div class="payment-history-list" id="paymentHistoryList">
+              <!-- JavaScriptで動的に生成 -->
+            </div>
+
+            <!-- 空状態 -->
+            <div class="empty-state" id="paymentHistoryEmptyState" style="display: none;">
+              <p>決済履歴がありません</p>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn--danger" id="deleteBtn">削除</button>
+              <div class="form-actions-right">
+                <a href="users.html" class="btn btn--secondary">キャンセル</a>
+                <button type="submit" class="btn btn--primary">保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- 削除確認ダイアログ -->
+    <div class="modal" id="deleteModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">ユーザーを削除しますか?</h3>
+        <p class="modal-message">
+          この操作は取り消せません。ユーザー「<span id="deleteUserName"></span>」を本当に削除しますか?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--secondary" id="cancelDeleteBtn">キャンセル</button>
+          <button type="button" class="btn btn--danger" id="confirmDeleteBtn">削除する</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINEアカウント追加モーダル -->
+    <div class="modal" id="addLineAccountModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">LINEアカウント追加(RPA)</h3>
+        <form id="addLineAccountForm">
+          <div class="form-group">
+            <label for="rpaId">RPA ID</label>
+            <input
+              type="text"
+              id="rpaId"
+              name="rpaId"
+              readonly
+            />
+            <p class="field-hint">自動生成されます</p>
+          </div>
+
+          <div class="form-group">
+            <label for="lineName">LINE名 <span class="required">*</span></label>
+            <input
+              type="text"
+              id="lineName"
+              name="lineName"
+              placeholder="例: MyNE公式アカウント"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="lineTel">電話番号 <span class="required">*</span></label>
+            <input
+              type="tel"
+              id="lineTel"
+              name="lineTel"
+              placeholder="例: 090-1234-5678"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="lineEmail">メールアドレス <span class="required">*</span></label>
+            <input
+              type="email"
+              id="lineEmail"
+              name="lineEmail"
+              placeholder="例: example@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="linePassword">パスワード <span class="required">*</span></label>
+            <div class="password-field">
+              <input
+                type="password"
+                id="linePassword"
+                name="linePassword"
+                placeholder="パスワードを入力"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="linePassword">
+                <svg class="icon-eye" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 4C4.5 4 2 10 2 10s2.5 6 8 6 8-6 8-6-2.5-6-8-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <svg class="icon-eye-off" style="display: none;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29453 13.572 9.14359 13.1984C8.99266 12.8249 8.91853 12.4247 8.92564 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1546 9.88 9.88M17 17l-3.88-3.88M10 4C4.5 4 2 10 2 10s.88 2.12 2.88 3.88M10 4v0c5.5 0 8 6 8 6s-.88 2.12-2.88 3.88M10 4l7 13m-7-13L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lineAccountStatus">ステータス</label>
+            <select id="lineAccountStatus" name="lineAccountStatus">
+              <option value="active">有効</option>
+              <option value="inactive">無効</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn--secondary" id="cancelAddLineAccountBtn">
+              キャンセル
+            </button>
+            <button type="submit" class="btn btn--primary">追加</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- LINEアカウント編集ダイアログ -->
+    <div class="modal" id="editLineAccountStatusModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">LINEアカウントを編集</h3>
+        <form id="editLineAccountStatusForm">
+          <div class="form-group">
+            <label for="editRpaId">RPA ID</label>
+            <input
+              type="text"
+              id="editRpaId"
+              name="editRpaId"
+              readonly
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="editLineName">LINE名 <span class="required">*</span></label>
+            <input
+              type="text"
+              id="editLineName"
+              name="editLineName"
+              placeholder="例: MyNE公式アカウント"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="editLineTel">電話番号 <span class="required">*</span></label>
+            <input
+              type="tel"
+              id="editLineTel"
+              name="editLineTel"
+              placeholder="例: 090-1234-5678"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="editLineEmail">メールアドレス <span class="required">*</span></label>
+            <input
+              type="email"
+              id="editLineEmail"
+              name="editLineEmail"
+              placeholder="例: example@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="editLinePassword">パスワード <span class="required">*</span></label>
+            <div class="password-field">
+              <input
+                type="password"
+                id="editLinePassword"
+                name="editLinePassword"
+                placeholder="パスワードを入力"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="editLinePassword">
+                <svg class="icon-eye" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 4C4.5 4 2 10 2 10s2.5 6 8 6 8-6 8-6-2.5-6-8-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <svg class="icon-eye-off" style="display: none;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29453 13.572 9.14359 13.1984C8.99266 12.8249 8.91853 12.4247 8.92564 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1546 9.88 9.88M17 17l-3.88-3.88M10 4C4.5 4 2 10 2 10s.88 2.12 2.88 3.88M10 4v0c5.5 0 8 6 8 6s-.88 2.12-2.88 3.88M10 4l7 13m-7-13L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editLineAccountStatus">ステータス</label>
+            <select id="editLineAccountStatus" name="editLineAccountStatus">
+              <option value="active">有効</option>
+              <option value="inactive">無効</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn--secondary" id="cancelEditLineAccountStatusBtn">
+              キャンセル
+            </button>
+            <button type="submit" class="btn btn--primary">更新</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- LINEアカウント解除確認ダイアログ -->
+    <div class="modal" id="unlinkLineAccountModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">LINEアカウントを解除しますか?</h3>
+        <p class="modal-message">
+          「<span id="unlinkLineAccountName"></span>」のLINEアカウントを解除します。よろしいですか?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--secondary" id="cancelUnlinkLineBtn">
+            キャンセル
+          </button>
+          <button type="button" class="btn btn--danger" id="confirmUnlinkLineBtn">
+            解除する
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 支払停止確認ダイアログ -->
+    <div class="modal" id="suspendPaymentModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">支払を停止しますか?</h3>
+        <p class="modal-message">
+          決済ID「<span id="suspendPaymentId"></span>」の支払を停止します。よろしいですか?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--secondary" id="cancelSuspendPaymentBtn">
+            キャンセル
+          </button>
+          <button type="button" class="btn btn--danger" id="confirmSuspendPaymentBtn">
+            停止する
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 支払再開確認ダイアログ -->
+    <div class="modal" id="resumePaymentModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h3 class="modal-title">支払を再開しますか?</h3>
+        <p class="modal-message">
+          決済ID「<span id="resumePaymentId"></span>」の支払を再開します。よろしいですか?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--secondary" id="cancelResumePaymentBtn">
+            キャンセル
+          </button>
+          <button type="button" class="btn btn--primary" id="confirmResumePaymentBtn">
+            再開する
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts/user-edit.js"></script>
+  </body>
+</html>

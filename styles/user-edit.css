@@ -1,0 +1,839 @@
+@import "./tokens.css";
+
+/* リセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-soft);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ヘッダー */
+.site-header {
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-strong) 100%);
+  color: #fff;
+  padding: 16px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.site-nav a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover {
+  color: #fff;
+}
+
+.site-nav a[aria-current="page"] {
+  color: #fff;
+  font-weight: 700;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 2px;
+}
+
+/* コンテナ */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* メインコンテンツ */
+main.container {
+  padding-top: 32px;
+  padding-bottom: 48px;
+}
+
+/* 見出し */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+/* メッセージ */
+.message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.message--success {
+  background: #e6f9f0;
+  color: #00a300;
+  border: 1px solid #b3e6cc;
+}
+
+.message--error {
+  background: #fee;
+  color: #c00;
+  border: 1px solid #fcc;
+}
+
+.message-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* セクション */
+.form-section {
+  margin-bottom: 32px;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* カード */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+}
+
+/* フォーム */
+.user-form {
+  max-width: 100%;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #c00;
+  font-weight: 700;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: var(--radius-sm);
+  background: #f5f5f5;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: var(--font-family);
+}
+
+.form-group input[type="text"]:hover:not(:disabled),
+.form-group input[type="email"]:hover:not(:disabled),
+.form-group input[type="password"]:hover:not(:disabled),
+.form-group input[type="tel"]:hover:not(:disabled),
+.form-group input[type="date"]:hover:not(:disabled),
+.form-group select:hover:not(:disabled) {
+  border-color: #b0b0b0;
+  background: #fafafa;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus {
+  border-color: var(--admin-primary);
+  background: #fff;
+  box-shadow: var(--focus);
+}
+
+.form-group input:disabled,
+.form-group input[readonly] {
+  background: #e8e8e8;
+  color: #999;
+  cursor: not-allowed;
+  border-color: #d0d0d0;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+/* フォーム区切り */
+.form-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* パスワードフィールド */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--muted);
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: var(--text);
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* フィールドヒント */
+.field-hint {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* フォームアクション */
+.form-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-actions-right {
+  display: flex;
+  gap: 12px;
+}
+
+/* ボタン */
+.btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--admin-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn--primary:hover {
+  background: var(--admin-primary-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn--primary:active {
+  background: var(--admin-primary-press);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn--secondary {
+  color: var(--text);
+  background: #fff;
+  border: 1px solid #d0d0d0;
+}
+
+.btn--secondary:hover {
+  background: #f5f5f5;
+  border-color: #b0b0b0;
+}
+
+.btn--secondary:active {
+  background: #e8e8e8;
+}
+
+.btn--danger {
+  color: #fff;
+  background: #dc2626;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn--danger:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.btn--danger:active {
+  background: #991b1b;
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+}
+
+/* モーダル */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.2s ease-out;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.modal-message {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* セクションヘッダー */
+.section-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 小サイズボタン */
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* 連携アカウント一覧 */
+.accounts-list {
+  margin-bottom: 16px;
+}
+
+.line-accounts-list {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+/* 決済履歴一覧 */
+.payment-history-list {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.accounts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  min-width: 1400px;
+}
+
+.accounts-table thead {
+  background: var(--bg-soft);
+}
+
+.accounts-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+}
+
+.accounts-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.accounts-table tbody tr:hover {
+  background: rgba(82, 82, 82, 0.05);
+}
+
+.accounts-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* アカウントステータスバッジ */
+.account-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.account-status-badge.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.account-status-badge.inactive {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* 支払ステータスバッジ */
+.payment-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.payment-status-badge.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.payment-status-badge.failed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.payment-status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.payment-status-badge.suspended {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* 友だち数表示 */
+.friends-count {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.friends-count::after {
+  content: ' 人';
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* 操作列のセル */
+.accounts-table td:last-child {
+  white-space: nowrap;
+}
+
+/* 編集ボタン */
+.btn-edit-status {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--admin-primary);
+  background: transparent;
+  border: 1px solid var(--admin-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.btn-edit-status:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+/* 解除ボタン */
+.btn-unlink {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+  background: transparent;
+  border: 1px solid #dc2626;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-unlink:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* 停止ボタン */
+.btn-suspend {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+  background: transparent;
+  border: 1px solid #dc2626;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-suspend:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* 再開ボタン */
+.btn-resume {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--admin-primary);
+  background: transparent;
+  border: 1px solid var(--admin-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-resume:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+/* 空状態 */
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--muted);
+  background: var(--bg-soft);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+}
+
+/* RPA ID表示 */
+.rpa-id-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rpa-id {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+/* 決済ID表示 */
+.payment-id-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-id {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+/* 金額表示 */
+.payment-amount {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.payment-amount::after {
+  content: ' 円';
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* パスワード表示セル */
+.password-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.password-display {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  background: var(--bg-soft);
+  min-width: 120px;
+  outline: none;
+}
+
+.password-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  padding: 6px;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.password-toggle-btn:hover {
+  background: var(--bg-soft);
+  color: var(--text);
+  border-color: var(--admin-primary);
+}
+
+.password-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-copy-password {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--admin-primary);
+  background: transparent;
+  border: 1px solid var(--admin-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-copy-password:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+.btn-copy-password:active {
+  transform: scale(0.95);
+}
+
+.btn-copy-password.copied {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+/* コピーボタン */
+.btn-copy {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--admin-primary);
+  background: transparent;
+  border: 1px solid var(--admin-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-copy:hover {
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+.btn-copy:active {
+  transform: scale(0.95);
+}
+
+.btn-copy.copied {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+/* レスポンシブ */
+@media (max-width: 640px) {
+  .site-header .container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .site-nav {
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions-right {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .modal-content {
+    padding: 24px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+
+  .accounts-table {
+    font-size: 13px;
+  }
+
+  .accounts-table th,
+  .accounts-table td {
+    padding: 8px;
+  }
+}

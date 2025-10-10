@@ -351,6 +351,28 @@ h1 {
   color: var(--muted);
 }
 
+/* 編集ボタン */
+.btn-edit {
+  color: var(--admin-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.btn-edit:hover {
+  background: rgba(82, 82, 82, 0.1);
+  text-decoration: none;
+}
+
+.btn-edit:focus {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
 /* アクセシビリティ */
 .visually-hidden {
   position: absolute;

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新規ユーザー追加 - MyNE 管理画面</title>
+    <link rel="stylesheet" href="styles/user-add.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="container">
+        <a href="login.html" class="site-logo">MyNE 管理画面</a>
+        <nav class="site-nav">
+          <a href="users.html">ユーザー管理</a>
+          <a href="settings.html">設定</a>
+          <a href="login.html">ログアウト</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+      <h1>新規ユーザー追加</h1>
+
+      <!-- 成功メッセージ -->
+      <div
+        class="message message--success"
+        id="successMessage"
+        style="display: none"
+      >
+        <svg
+          class="message-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>ユーザーを追加しました</span>
+      </div>
+
+      <!-- エラーメッセージ -->
+      <div
+        class="message message--error"
+        id="errorMessage"
+        style="display: none"
+      >
+        <svg
+          class="message-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="errorMessageText"></span>
+      </div>
+
+      <!-- ユーザー追加フォーム -->
+      <section class="form-section">
+        <div class="card">
+          <form id="userAddForm" class="user-form">
+            <div class="form-group">
+              <label for="displayName">表示名 <span class="required">*</span></label>
+              <input
+                type="text"
+                id="displayName"
+                name="displayName"
+                placeholder="山田 太郎"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス <span class="required">*</span></label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="yamada@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="status">ステータス <span class="required">*</span></label>
+              <select id="status" name="status" required>
+                <option value="active">有効</option>
+                <option value="suspended">停止</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="startDate">利用開始日 <span class="required">*</span></label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">初期パスワード <span class="required">*</span></label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="8文字以上、英数字を含む"
+                  required
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="password"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <p class="field-hint">8文字以上、英数字を含む必要があります</p>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">初期パスワード(確認) <span class="required">*</span></label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="パスワードを再入力"
+                  required
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-target="confirmPassword"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    style="display: none"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    ></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <a href="users.html" class="btn btn--secondary">キャンセル</a>
+              <button type="submit" class="btn btn--primary">ユーザーを追加</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script src="scripts/user-add.js"></script>
+  </body>
+</html>
