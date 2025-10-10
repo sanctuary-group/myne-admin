@@ -76,14 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: 1,
       rpaId: 'U1234567890abcdef1234567890abcdef',
-      displayName: '山田 太郎',
+      tel: '090-1234-5678',
+      email: 'user1@example.com',
+      password: 'SecurePass123!',
       linkedAt: '2024-01-15 10:30',
       status: 'active'
     },
     {
       id: 2,
       rpaId: 'Uabcdef1234567890abcdef1234567890',
-      displayName: '山田太郎（サブ）',
+      tel: '080-9876-5432',
+      email: 'user2@example.com',
+      password: 'MyPassword456@',
       linkedAt: '2024-02-20 14:00',
       status: 'active'
     }
@@ -92,10 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let lineAccountIdToUnlink = null;
   let lineAccountIdToEdit = null;
 
-  // RPA IDを短縮表示
-  function shortenRpaId(rpaId) {
-    if (rpaId.length <= 12) return rpaId;
-    return rpaId.substring(0, 6) + '...' + rpaId.substring(rpaId.length - 4);
+  // RPA IDを自動生成（Uで始まる33文字の16進数）
+  function generateRpaId() {
+    const hexChars = '0123456789abcdef';
+    let rpaId = 'U';
+    for (let i = 0; i < 32; i++) {
+      rpaId += hexChars[Math.floor(Math.random() * 16)];
+    }
+    return rpaId;
   }
 
   // LINEアカウント一覧の表示
@@ -116,7 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
     thead.innerHTML = `
       <tr>
         <th>RPA ID</th>
-        <th>表示名</th>
+        <th>電話番号</th>
+        <th>メールアドレス</th>
+        <th>パスワード</th>
         <th>連携日時</th>
         <th>ステータス</th>
         <th>操作</th>
@@ -130,13 +140,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const statusClass = account.status === 'active' ? 'active' : 'inactive';
       const statusLabel = account.status === 'active' ? '有効' : '無効';
-      const shortRpaId = shortenRpaId(account.rpaId);
 
       row.innerHTML = `
         <td>
-          <span class="rpa-id" title="${account.rpaId}">${shortRpaId}</span>
+          <div class="rpa-id-cell">
+            <span class="rpa-id">${account.rpaId}</span>
+            <button type="button" class="btn-copy" data-rpa-id="${account.rpaId}">コピー</button>
+          </div>
         </td>
-        <td>${account.displayName}</td>
+        <td>${account.tel}</td>
+        <td>${account.email}</td>
+        <td>
+          <div class="password-cell">
+            <input type="password" class="password-display" value="${account.password}" readonly data-account-id="${account.id}" />
+            <button type="button" class="password-toggle-btn" data-account-id="${account.id}">
+              <svg class="icon-eye" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 4C4.5 4 2 10 2 10s2.5 6 8 6 8-6 8-6-2.5-6-8-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <svg class="icon-eye-off" style="display: none;" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29453 13.572 9.14359 13.1984C8.99266 12.8249 8.91853 12.4247 8.92564 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1546 9.88 9.88M17 17l-3.88-3.88M10 4C4.5 4 2 10 2 10s.88 2.12 2.88 3.88M10 4v0c5.5 0 8 6 8 6s-.88 2.12-2.88 3.88M10 4l7 13m-7-13L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="btn-copy-password" data-password="${account.password}">コピー</button>
+          </div>
+        </td>
         <td>${account.linkedAt}</td>
         <td><span class="account-status-badge ${statusClass}">${statusLabel}</span></td>
         <td>
@@ -152,6 +180,72 @@ document.addEventListener('DOMContentLoaded', () => {
     lineAccountsList.innerHTML = '';
     lineAccountsList.appendChild(table);
 
+    // パスワード表示トグルのイベントリスナーを追加
+    const passwordToggleButtons = lineAccountsList.querySelectorAll('.password-toggle-btn');
+    passwordToggleButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const accountId = e.currentTarget.getAttribute('data-account-id');
+        const input = lineAccountsList.querySelector(`.password-display[data-account-id="${accountId}"]`);
+        const iconEye = e.currentTarget.querySelector('.icon-eye');
+        const iconEyeOff = e.currentTarget.querySelector('.icon-eye-off');
+
+        if (input.type === 'password') {
+          input.type = 'text';
+          iconEye.style.display = 'none';
+          iconEyeOff.style.display = 'block';
+        } else {
+          input.type = 'password';
+          iconEye.style.display = 'block';
+          iconEyeOff.style.display = 'none';
+        }
+      });
+    });
+
+    // パスワードコピーボタンのイベントリスナーを追加
+    const copyPasswordButtons = lineAccountsList.querySelectorAll('.btn-copy-password');
+    copyPasswordButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const password = e.target.getAttribute('data-password');
+        try {
+          await navigator.clipboard.writeText(password);
+          const originalText = e.target.textContent;
+          e.target.textContent = 'コピー済み';
+          e.target.classList.add('copied');
+
+          setTimeout(() => {
+            e.target.textContent = originalText;
+            e.target.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('コピーに失敗しました:', err);
+          alert('コピーに失敗しました');
+        }
+      });
+    });
+
+    // RPA IDコピーボタンのイベントリスナーを追加
+    const copyButtons = lineAccountsList.querySelectorAll('.btn-copy');
+    copyButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const rpaId = e.target.getAttribute('data-rpa-id');
+        try {
+          await navigator.clipboard.writeText(rpaId);
+          // ボタンのテキストを一時的に変更
+          const originalText = e.target.textContent;
+          e.target.textContent = 'コピー済み';
+          e.target.classList.add('copied');
+
+          setTimeout(() => {
+            e.target.textContent = originalText;
+            e.target.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('コピーに失敗しました:', err);
+          alert('コピーに失敗しました');
+        }
+      });
+    });
+
     // 編集ボタンのイベントリスナーを追加
     const editStatusButtons = lineAccountsList.querySelectorAll('.btn-edit-status');
     editStatusButtons.forEach(btn => {
@@ -160,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const account = lineAccounts.find(a => a.id === accountId);
         if (account) {
           lineAccountIdToEdit = accountId;
-          editLineAccountName.textContent = `${account.displayName} (${shortenRpaId(account.rpaId)})`;
+          editLineAccountName.textContent = `${account.tel}`;
           editLineAccountStatus.value = account.status;
           editLineAccountStatusModal.style.display = 'flex';
         }
@@ -175,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const account = lineAccounts.find(a => a.id === accountId);
         if (account) {
           lineAccountIdToUnlink = accountId;
-          unlinkLineAccountName.textContent = `${account.displayName} (${shortenRpaId(account.rpaId)})`;
+          unlinkLineAccountName.textContent = `${account.tel}`;
           unlinkLineAccountModal.style.display = 'flex';
         }
       });
@@ -187,6 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // LINEアカウント追加ボタンクリック
   addLineAccountBtn.addEventListener('click', () => {
+    // RPA IDを自動生成
+    document.getElementById('rpaId').value = generateRpaId();
     addLineAccountModal.style.display = 'flex';
   });
 
@@ -220,12 +316,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formData = new FormData(addLineAccountForm);
     const rpaId = formData.get('rpaId').trim();
-    const displayName = formData.get('lineDisplayName').trim();
+    const tel = formData.get('lineTel').trim();
+    const email = formData.get('lineEmail').trim();
+    const password = formData.get('linePassword').trim();
     const accountStatus = formData.get('lineAccountStatus');
 
     // バリデーション - 必須項目チェック
-    if (!rpaId || !displayName) {
-      alert('RPA IDと表示名は必須です');
+    if (!rpaId || !tel || !email || !password) {
+      alert('すべての必須項目を入力してください');
       return;
     }
 
@@ -236,10 +334,37 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // 重複チェック
-    const duplicate = lineAccounts.find(a => a.rpaId === rpaId);
-    if (duplicate) {
+    // メールアドレス形式チェック
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert('正しいメールアドレスを入力してください');
+      return;
+    }
+
+    // パスワード強度チェック（8文字以上）
+    if (password.length < 8) {
+      alert('パスワードは8文字以上にしてください');
+      return;
+    }
+
+    // 重複チェック（RPA ID）
+    const duplicateRpaId = lineAccounts.find(a => a.rpaId === rpaId);
+    if (duplicateRpaId) {
       alert('同じRPA IDが既に登録されています');
+      return;
+    }
+
+    // 重複チェック（電話番号）
+    const duplicateTel = lineAccounts.find(a => a.tel === tel);
+    if (duplicateTel) {
+      alert('同じ電話番号が既に登録されています');
+      return;
+    }
+
+    // 重複チェック（メールアドレス）
+    const duplicateEmail = lineAccounts.find(a => a.email === email);
+    if (duplicateEmail) {
+      alert('同じメールアドレスが既に登録されています');
       return;
     }
 
@@ -247,7 +372,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const newAccount = {
       id: Math.max(...lineAccounts.map(a => a.id), 0) + 1,
       rpaId: rpaId,
-      displayName: displayName,
+      tel: tel,
+      email: email,
+      password: password,
       linkedAt: new Date().toISOString().slice(0, 16).replace('T', ' '),
       status: accountStatus
     };

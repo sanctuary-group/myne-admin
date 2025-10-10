@@ -277,26 +277,58 @@
         <h3 class="modal-title">LINEアカウント追加(RPA)</h3>
         <form id="addLineAccountForm">
           <div class="form-group">
-            <label for="rpaId">RPA ID <span class="required">*</span></label>
+            <label for="rpaId">RPA ID</label>
             <input
               type="text"
               id="rpaId"
               name="rpaId"
-              placeholder="例: U1234567890abcdef1234567890abcdef"
-              required
+              readonly
             />
-            <p class="field-hint">Uで始まる33文字の英数字</p>
+            <p class="field-hint">自動生成されます</p>
           </div>
 
           <div class="form-group">
-            <label for="lineDisplayName">LINE表示名 <span class="required">*</span></label>
+            <label for="lineTel">電話番号 <span class="required">*</span></label>
             <input
-              type="text"
-              id="lineDisplayName"
-              name="lineDisplayName"
-              placeholder="例: 山田 太郎"
+              type="tel"
+              id="lineTel"
+              name="lineTel"
+              placeholder="例: 090-1234-5678"
               required
             />
+          </div>
+
+          <div class="form-group">
+            <label for="lineEmail">メールアドレス <span class="required">*</span></label>
+            <input
+              type="email"
+              id="lineEmail"
+              name="lineEmail"
+              placeholder="例: example@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="linePassword">パスワード <span class="required">*</span></label>
+            <div class="password-field">
+              <input
+                type="password"
+                id="linePassword"
+                name="linePassword"
+                placeholder="パスワードを入力"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="linePassword">
+                <svg class="icon-eye" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 4C4.5 4 2 10 2 10s2.5 6 8 6 8-6 8-6-2.5-6-8-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <svg class="icon-eye-off" style="display: none;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29453 13.572 9.14359 13.1984C8.99266 12.8249 8.91853 12.4247 8.92564 12.0219C8.93274 11.6191 9.02091 11.2219 9.18488 10.8539C9.34884 10.4859 9.58525 10.1546 9.88 9.88M17 17l-3.88-3.88M10 4C4.5 4 2 10 2 10s.88 2.12 2.88 3.88M10 4v0c5.5 0 8 6 8 6s-.88 2.12-2.88 3.88M10 4l7 13m-7-13L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div class="form-group">
